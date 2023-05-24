@@ -1,6 +1,6 @@
 import pdb
 import yaml
-from config_models import Auth, GlobalSettings, Endpoint, Config
+from config.models import Auth, GlobalSettings, Endpoint, Config
 import sys
 from pydantic import FilePath
 
@@ -27,9 +27,6 @@ def load_config(yaml_path: FilePath):
         endpoint.propagate_default_config_to_child()
 
     return config
-
-
-config = load_config(sys.argv[1])
 
 
 

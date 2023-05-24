@@ -1,14 +1,13 @@
-import pdb
 import yaml
-from config.models import Auth, GlobalSettings, Endpoint, Config
-import sys
 from pydantic import FilePath
 
+from config.models import Auth, Config, Endpoint, GlobalSettings
 
-def load_config(yaml_path: FilePath):
+
+def load_config(yaml_path: FilePath) -> Config:
 
     # Load the YAML configuration file
-    with open(yaml_path, 'r') as file:
+    with open(yaml_path) as file:
         raw_config = yaml.safe_load(file)
 
     # Parse it into the dataclasses
@@ -22,11 +21,8 @@ def load_config(yaml_path: FilePath):
     config = Config(AUTH=auth,
                     GLOBAL_SETTINGS=global_settings,
                     ENDPOINTS=endpoints)
-    
+
     for endpoint in config.ENDPOINTS.values():
         endpoint.propagate_default_config_to_child()
 
     return config
-
-
-
